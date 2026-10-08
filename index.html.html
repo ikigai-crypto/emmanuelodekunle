@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06111f">
+  <meta name="description" content="Emmanuel Odekunle's cloud security and AWS engineering portfolio.">
+  <title>Emmanuel Odekunle | Cloud Security Engineer</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306111f'/%3E%3Cpath d='M17 19h30v8H25v6h18v8H25v6h22v8H17z' fill='%234ee1c1'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #06111f;
+      --ink-soft: #0b1b2d;
+      --panel: #10243a;
+      --paper: #f3f7f9;
+      --white: #ffffff;
+      --muted: #9eb0c2;
+      --line: rgba(158, 176, 194, .22);
+      --mint: #4ee1c1;
+      --mint-dark: #24bfa1;
+      --amber: #ffb24b;
+      --blue: #62a9ff;
+      --shadow: 0 24px 70px rgba(2, 10, 20, .28);
+      --radius: 1.35rem;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .skip-link {
+      position: fixed;
+      top: .75rem;
+      left: .75rem;
+      z-index: 100;
+      padding: .7rem 1rem;
+      background: var(--white);
+      color: var(--ink);
+      border-radius: .65rem;
+      transform: translateY(-180%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .scroll-progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      z-index: 90;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--mint), var(--amber));
+    }
+    .wrap { width: min(calc(100% - 2.5rem), var(--max)); margin: 0 auto; }
+    .eyebrow {
+      margin: 0 0 .75rem;
+      color: var(--mint-dark);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .section-title {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.1rem, 5vw, 4.5rem);
+      line-height: 1.03;
+      letter-spacing: -.055em;
+    }
+    .section-lede {
+      max-width: 680px;
+      margin: 1.1rem 0 0;
+      color: #536579;
+      font-size: 1.08rem;
+    }
+    .section-head { margin-bottom: 3rem; }
+    .section { padding: clamp(5rem, 10vw, 8.5rem) 0; }
+
+    .site-header {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 20;
+      padding: 1.3rem 0;
+      color: var(--white);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .brand-mark {
+      display: grid;
+      width: 2.1rem;
+      height: 2.1rem;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: .65rem;
+      background: rgba(255,255,255,.07);
+      color: var(--mint);
+      font-size: .76rem;
+    }
+    .nav-links { display: flex; align-items: center; gap: 1.7rem; }
+    .nav-links a {
+      color: #c8d4df;
+      font-size: .9rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--white); }
+    .nav-cta {
+      padding: .62rem 1rem;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 780px;
+      padding: 9.5rem 0 6.5rem;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 84% 20%, rgba(78, 225, 193, .16), transparent 28%),
+        radial-gradient(circle at 24% 92%, rgba(98, 169, 255, .12), transparent 30%),
+        var(--ink);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .13;
+      background-image:
+        linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(310px, .75fr);
+      align-items: center;
+      gap: clamp(3rem, 8vw, 7rem);
+    }
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 1.4rem;
+      color: #c9d5df;
+      font-size: .86rem;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    .availability::before {
+      content: "";
+      width: .55rem;
+      height: .55rem;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 0 .35rem rgba(78,225,193,.12);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(3.5rem, 8vw, 7.3rem);
+      line-height: .88;
+      letter-spacing: -.07em;
+    }
+    h1 span { display: block; color: var(--mint); }
+    .hero-copy {
+      max-width: 680px;
+      margin: 1.7rem 0 0;
+      color: #b8c8d6;
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.2rem; }
+    .button {
+      display: inline-flex;
+      min-height: 3.15rem;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      padding: .8rem 1.2rem;
+      border: 1px solid transparent;
+      border-radius: .8rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { background: var(--mint); color: var(--ink); }
+    .button.secondary { border-color: rgba(255,255,255,.22); color: var(--white); background: rgba(255,255,255,.05); }
+    .button svg { width: 1rem; height: 1rem; }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem 1.4rem;
+      margin-top: 2.2rem;
+      color: #8ea3b7;
+      font-size: .88rem;
+    }
+    .hero-meta span { display: inline-flex; align-items: center; gap: .45rem; }
+    .portrait-card {
+      position: relative;
+      justify-self: center;
+      width: min(100%, 390px);
+      aspect-ratio: 1 / 1.15;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12rem 12rem 1.5rem 1.5rem;
+      background: linear-gradient(155deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    .portrait-card::before, .portrait-card::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(78,225,193,.35);
+      border-radius: 50%;
+    }
+    .portrait-card::before { inset: 7% 9% 18%; }
+    .portrait-card::after { inset: 11% 13% 22%; border-style: dashed; opacity: .65; }
+    .portrait-slot {
+      position: absolute;
+      inset: 15% 17% auto;
+      display: grid;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 2px solid var(--mint);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(98,169,255,.3), transparent 28%),
+        linear-gradient(145deg, #163553, #0a1c2e);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .signal-strip { position: relative; margin-top: -2.6rem; z-index: 5; }
+    .signals {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-radius: 1.2rem;
+      background: var(--white);
+      box-shadow: 0 18px 55px rgba(7, 25, 42, .12);
+      overflow: hidden;
+    }
+    .signal { min-height: 140px; padding: 1.55rem; border-right: 1px solid #dde6eb; }
+    .signal:last-child { border-right: 0; }
+    .signal strong { display: block; font-size: 2rem; line-height: 1; letter-spacing: -.05em; }
+    .signal span { display: block; margin-top: .65rem; color: #617287; font-size: .84rem; line-height: 1.4; }
+
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 8vw, 7rem); align-items: start; }
+    .about-index { position: sticky; top: 2rem; }
+    .about-index .monogram {
+      display: grid;
+      width: 5.5rem;
+      height: 5.5rem;
+      place-items: center;
+      border-radius: 1.2rem;
+      background: var(--ink);
+      color: var(--mint);
+      font-size: 1.25rem;
+      font-weight: 900;
+      box-shadow: .8rem .8rem 0 var(--mint);
+    }
+    .about-copy > p { margin: 0 0 1.35rem; color: #405368; font-size: 1.1rem; }
+    .about-copy .lead { color: var(--ink); font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.35; font-weight: 670; letter-spacing: -.025em; }
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 2rem; }
+    .principle { padding: 1rem; border: 1px solid #d7e2e8; border-radius: .9rem; background: rgba(255,255,255,.6); }
+    .principle b { display: block; margin-bottom: .25rem; }
+    .principle span { color: #617287; font-size: .84rem; }
+
+    .projects { color: var(--white); background: var(--ink); }
+    .projects .section-lede { color: #a6b7c7; }
+    .project-stack { display: grid; gap: 1.25rem; }
+    .project {
+      display: grid;
+      grid-template-columns: .76fr 1.24fr;
+      min-height: 430px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      background: var(--ink-soft);
+      overflow: hidden;
+    }
+    .project-visual {
+      position: relative;
+      min-height: 360px;
+      padding: 2rem;
+      background: linear-gradient(145deg, rgba(78,225,193,.11), rgba(98,169,255,.05));
+      overflow: hidden;
+    }
+    .project-visual.amber { background: linear-gradient(145deg, rgba(255,178,75,.12), rgba(98,169,255,.06)); }
+    .visual-tag { color: var(--mint); font-size: .75rem; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    .project-visual.amber .visual-tag { color: var(--amber); }
+    .cloud-map { position: absolute; inset: 4rem 1.6rem 1.6rem; width: calc(100% - 3.2rem); height: calc(100% - 5.6rem); }
+    .project-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(2rem, 5vw, 4rem); }
+    .project-number { color: #71879b; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .project h3 { margin: .7rem 0 1rem; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.03; letter-spacing: -.05em; }
+    .project-copy > p { margin: 0; color: #aebdcc; }
+    .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin-top: 1.7rem; }
+    .metric { padding: .95rem; border: 1px solid rgba(255,255,255,.1); border-radius: .8rem; background: rgba(255,255,255,.035); }
+    .metric strong { display: block; color: var(--mint); font-size: 1.2rem; }
+    .project.amber-theme .metric strong { color: var(--amber); }
+    .metric span { color: #8398aa; font-size: .74rem; }
+    .stack-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.6rem; }
+    .stack-tags span { padding: .38rem .62rem; border: 1px solid rgba(255,255,255,.13); border-radius: 999px; color: #b7c7d4; font-size: .75rem; }
+
+    .experience-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(2rem, 7vw, 6rem); }
+    .experience-side { position: sticky; top: 2rem; align-self: start; }
+    .timeline { border-top: 1px solid #ccd9e0; }
+    .role { display: grid; grid-template-columns: 165px 1fr; gap: 1.4rem; padding: 2rem 0; border-bottom: 1px solid #ccd9e0; }
+    .role-date { color: #66798d; font-size: .82rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .role h3 { margin: 0; font-size: 1.42rem; letter-spacing: -.025em; }
+    .role-company { margin: .2rem 0 .8rem; color: var(--mint-dark); font-weight: 800; }
+    .role p { margin: 0; color: #526579; }
+
+    .capabilities { background: #e5edf1; }
+    .cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .cap-card {
+      min-height: 250px;
+      padding: 1.6rem;
+      border: 1px solid rgba(6,17,31,.1);
+      border-radius: 1.1rem;
+      background: rgba(255,255,255,.7);
+    }
+    .cap-card:nth-child(1) { background: var(--ink); color: var(--white); }
+    .cap-card .cap-no { color: var(--mint-dark); font-size: .75rem; font-weight: 900; letter-spacing: .12em; }
+    .cap-card h3 { margin: 2.5rem 0 .75rem; font-size: 1.5rem; letter-spacing: -.03em; }
+    .cap-card p { margin: 0; color: #637489; }
+    .cap-card:nth-child(1) p { color: #9fb1c2; }
+    .tool-cloud { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 2rem; }
+    .tool-cloud span { padding: .55rem .75rem; border-radius: .55rem; background: var(--white); color: #34485d; font-size: .82rem; font-weight: 700; }
+
+    .credentials { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .credential {
+      padding: 1.6rem;
+      border: 1px solid #d7e2e8;
+      border-radius: 1.05rem;
+      background: var(--white);
+    }
+    .credential .type { color: var(--mint-dark); font-size: .72rem; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    .credential h3 { margin: .75rem 0 .45rem; font-size: 1.2rem; line-height: 1.35; }
+    .credential p { margin: 0; color: #64768a; font-size: .9rem; }
+    .credential.education { grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; background: var(--ink); color: var(--white); }
+    .credential.education p { color: #9fb1c2; }
+    .credential.education .degree-mark { margin-top: 4rem; color: var(--mint); font-size: 3.2rem; font-weight: 900; letter-spacing: -.06em; }
+
+    .contact { padding: clamp(5rem, 10vw, 8rem) 0 2rem; color: var(--white); background: var(--ink); }
+    .contact-card {
+      position: relative;
+      padding: clamp(2rem, 6vw, 5.5rem);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(78,225,193,.17), transparent 30%),
+        var(--ink-soft);
+      overflow: hidden;
+    }
+    .contact-card h2 { max-width: 850px; margin: 0; font-size: clamp(2.5rem, 7vw, 6.2rem); line-height: .98; letter-spacing: -.06em; }
+    .contact-card h2 span { color: var(--mint); }
+    .contact-links { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }
+    .contact-links a { padding: .7rem .9rem; border: 1px solid rgba(255,255,255,.16); border-radius: .65rem; color: #c1d0dc; text-decoration: none; }
+    .contact-links a:hover { border-color: var(--mint); color: var(--white); }
+    footer { display: flex; justify-content: space-between; gap: 1rem; padding: 2rem 0 0; color: #71879b; font-size: .82rem; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      .hero { min-height: auto; }
+      .hero-grid, .about-grid, .experience-grid { grid-template-columns: 1fr; }
+      .portrait-card { width: min(82vw, 370px); margin-top: 1rem; }
+      .signals { grid-template-columns: repeat(2, 1fr); }
+      .signal:nth-child(2) { border-right: 0; }
+      .signal:nth-child(-n+2) { border-bottom: 1px solid #dde6eb; }
+      .about-index, .experience-side { position: static; }
+      .project { grid-template-columns: 1fr; }
+      .cap-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 650px) {
+      .wrap { width: min(calc(100% - 1.4rem), var(--max)); }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding-top: 8rem; }
+      h1 { font-size: clamp(3.25rem, 17vw, 5.2rem); }
+      .hero-actions .button { width: 100%; }
+      .signal { min-height: 120px; padding: 1.1rem; }
+      .signal strong { font-size: 1.55rem; }
+      .principles, .metric-row, .cap-grid, .credentials { grid-template-columns: 1fr; }
+      .project-visual { min-height: 300px; }
+      .role { grid-template-columns: 1fr; gap: .4rem; }
+      .credential.education { grid-row: auto; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* Hero tags */
+    .hero-tags { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin-bottom: 1.4rem; }
+    .hero-tags .availability { margin-bottom: 0; }
+
+    /* Project links */
+    .project-links { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+    .project-link {
+      display: inline-flex;
+      min-height: 3.1rem;
+      align-items: center;
+      justify-content: center;
+      padding: .7rem 1.7rem;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: .75rem;
+      background: rgba(255,255,255,.03);
+      color: var(--white);
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .project-link:hover { transform: translateY(-2px); border-color: var(--mint); background: rgba(78,225,193,.08); }
+    .project.amber-theme .project-link:hover { border-color: var(--amber); background: rgba(255,178,75,.08); }
+
+    /* Architecture screenshot inside a project card */
+    .project-proof {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 1.25rem clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .proof-label {
+      display: block;
+      margin-bottom: .9rem;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .project-proof img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: .9rem;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* Collapsible lab walkthrough */
+    .walkthrough {
+      margin-top: 1.6rem;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: .75rem;
+      background: rgba(255,255,255,.03);
+    }
+    .walkthrough summary {
+      display: flex;
+      min-height: 3.1rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .7rem 1.4rem;
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+    }
+    .walkthrough summary::-webkit-details-marker { display: none; }
+    .walkthrough summary::after {
+      content: "";
+      flex: none;
+      width: .55rem;
+      height: .55rem;
+      border-right: 2px solid var(--amber);
+      border-bottom: 2px solid var(--amber);
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform .2s ease;
+    }
+    .walkthrough[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
+    .walkthrough summary:hover { color: var(--amber); }
+    .walkthrough-body { padding: .2rem 1.4rem 1.5rem; border-top: 1px solid rgba(255,255,255,.1); color: #aebdcc; font-size: .94rem; }
+    .walkthrough-body h4 { margin: 1.4rem 0 .6rem; color: var(--white); font-size: 1rem; }
+    .walkthrough-body p { margin: 0 0 .8rem; }
+    .walkthrough-body ol, .walkthrough-body ul { margin: 0; padding-left: 1.2rem; }
+    .walkthrough-body li { margin: 0 0 .6rem; }
+    .walkthrough-body li strong { color: var(--white); }
+    .walkthrough-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; margin-top: .4rem; }
+
+    /* Avoid orphaned cards in grids */
+    .cap-card:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 0; }
+    .credential:last-child { grid-column: 1 / -1; }
+
+    @media (max-width: 650px) {
+      .project-link { flex: 1 1 100%; }
+      .walkthrough-cols { grid-template-columns: 1fr; }
+    }
+  </style>
+  <noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Emmanuel Odekunle, back to top"><span class="brand-mark">EO</span> Emmanuel Odekunle</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#capabilities">Capabilities</a>
+        <a class="nav-cta" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="hero-tags"><div class="availability">Cloud security</div><div class="availability">Cybersecurity</div></div>
+          <h1>Emmanuel Odekunle<span></span></h1>
+          <p class="hero-copy">I design and strengthen AWS environments with least-privilege access, segmented networks, resilient infrastructure, encryption, observability, and practical cost control.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore selected work</a>
+            <a class="button secondary" href="mailto:eodekunle52@gmail.com">Email me</a>
+          </div>
+          <div class="hero-meta">
+            <span>AWS &amp; Terraform</span><span>Security engineering</span><span>Infrastructure resilience</span><span>Ethical Hacking</span><span>Detection Engineering</span>
+          </div>
+        </div>
+        <aside class="portrait-card" aria-label="Profile image area">
+          <div class="portrait-slot">
+            <!-- Add a square profile image here. Example: <img src="profile.jpg" alt="Emmanuel Odekunle"> -->
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <section class="section" id="about">
+      <div class="wrap about-grid">
+        <div class="about-index reveal">
+          <p class="eyebrow">About</p>
+          <div class="monogram" aria-hidden="true">EO</div>
+        </div>
+        <div class="about-copy reveal">
+          <p class="lead">Cloud security and infrastructure engineering with a security-first focus.</p>
+          <p>I design and propose secure cloud architectures, translate them into production-ready infrastructure using Terraform, and assess environments to identify security and operational risks. My work spans cloud security, infrastructure as code, security assessments, detection and visibility, FinOps and performance testing in order to help teams build secure, scalable, and cost-conscious cloud environments.</p>
+          <div class="principles">
+            <div class="principle"><b>Cloud & DevSecOps</b><span>GCP, AWS security, IAM and least privilege, CloudTrail, Terraform, CI/CD security and infrastructure hardening.</span></div>
+            <div class="principle"><b>Defense in depth</b><span>Independent controls across identity, network, data, and workloads.</span></div>
+            <div class="principle"><b>Penetration Testing</b><span>Web application and cloud penetration testing, reconnaissance, vulnerability discovery, exploitation, privilege escalation, misconfiguration assessment, and security validation.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Selected work</p>
+          <h2 class="section-title">Security architecture with measurable outcomes</h2>
+          <p class="section-lede">Four projects that combine resilient design, cloud hardening, automation, operational evidence, and controlled validation.</p>
+        </div>
+
+        <div class="project-stack">
+          <article class="project reveal">
+            <div class="project-visual">
+              <span class="visual-tag">Resilience architecture</span>
+              <svg class="cloud-map" viewBox="0 0 500 400" role="img" aria-label="Multi-region AWS architecture. Route 53 and Global Accelerator send users to an ALB with WAF in each region. The primary region, af-south-1, runs ECS Fargate and ElastiCache across two availability zones with Aurora behind RDS Proxy. The eu-west-1 region is a pilot-light disaster recovery copy with a replicated Aurora secondary cluster. IAM, multi-Region KMS keys, CloudTrail and Config span both regions.">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1"><stop stop-color="#4ee1c1"/><stop offset="1" stop-color="#62a9ff"/></linearGradient>
+                  <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ee1c1"/></marker>
+                  <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ffb24b"/></marker>
+                </defs>
+
+                <!-- Edge: users, DNS, anycast -->
+                <rect x="14" y="14" width="84" height="44" rx="10" fill="#10243a" stroke="#53708a" stroke-width="1.5"/><text x="56.0" y="35.0" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Users</text><text x="56.0" y="48.0" fill="#92aabd" font-size="9.5" text-anchor="middle">HTTPS</text>
+                <rect x="128" y="14" width="104" height="44" rx="10" fill="#10243a" stroke="#53708a" stroke-width="1.5"/><text x="180.0" y="35.0" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Route 53</text><text x="180.0" y="48.0" fill="#92aabd" font-size="9.5" text-anchor="middle">DNS alias</text>
+                <rect x="262" y="14" width="224" height="44" rx="10" fill="#0f2d43" stroke="#4ee1c1" stroke-width="2"/><text x="374.0" y="35.0" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Global Accelerator</text><text x="374.0" y="48.0" fill="#92aabd" font-size="9.5" text-anchor="middle">Anycast · health-based failover</text>
+                <path d="M98 36H126" stroke="#4ee1c1" stroke-width="2.5" marker-end="url(#arr1)"/>
+                <path d="M232 36H260" stroke="#4ee1c1" stroke-width="2.5" marker-end="url(#arr1)"/>
+                <path d="M275 58V78H139V94" fill="none" stroke="#4ee1c1" stroke-width="2.5" marker-end="url(#arr1)"/>
+                <path d="M391 58V94" fill="none" stroke="#ffb24b" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arr2)"/>
+
+                <!-- Primary region -->
+                <rect x="14" y="96" width="250" height="236" rx="16" fill="none" stroke="#62a9ff" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="4 4"/>
+                <text x="26" y="114" fill="#62a9ff" font-size="10.5" font-weight="700">af-south-1 · Primary (active)</text>
+                <rect x="26" y="124" width="226" height="36" rx="10" fill="#0f2d43" stroke="#4ee1c1" stroke-width="1.5"/><text x="139.0" y="141.0" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">ALB + WAF</text><text x="139.0" y="154.0" fill="#92aabd" font-size="9.5" text-anchor="middle">public subnets · NAT per AZ</text>
+                <rect x="26" y="172" width="108" height="52" rx="10" fill="#10243a" stroke="#62a9ff" stroke-width="1.5"/><text x="80.0" y="187" fill="#7890a4" font-size="9" text-anchor="middle">AZ a · private</text><text x="80.0" y="204" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">ECS Fargate</text><text x="80.0" y="217" fill="#92aabd" font-size="9.5" text-anchor="middle">ElastiCache</text>
+                <rect x="144" y="172" width="108" height="52" rx="10" fill="#10243a" stroke="#62a9ff" stroke-width="1.5"/><text x="198.0" y="187" fill="#7890a4" font-size="9" text-anchor="middle">AZ b · private</text><text x="198.0" y="204" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">ECS Fargate</text><text x="198.0" y="217" fill="#92aabd" font-size="9.5" text-anchor="middle">ElastiCache</text>
+                <rect x="26" y="236" width="226" height="40" rx="10" fill="#10243a" stroke="#4ee1c1" stroke-width="1.5"/><text x="139.0" y="255.0" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">RDS Proxy → Aurora</text><text x="139.0" y="268.0" fill="#92aabd" font-size="9.5" text-anchor="middle">writer + reader · isolated subnets</text>
+                <rect x="26" y="288" width="226" height="32" rx="10" fill="#10243a" stroke="#53708a" stroke-width="1.5"/><text x="139.0" y="308.0" fill="#fff" font-size="10.5" font-weight="700" text-anchor="middle">S3 · ECR via VPC endpoints</text>
+                <path d="M80 160V172M198 160V172M80 224V236M198 224V236" stroke="#4ee1c1" stroke-width="2" fill="none" opacity=".8"/>
+
+                <!-- DR region -->
+                <rect x="296" y="96" width="190" height="236" rx="16" fill="none" stroke="#ffb24b" stroke-opacity=".6" stroke-width="1.5" stroke-dasharray="4 4"/>
+                <text x="308" y="114" fill="#ffb24b" font-size="10.5" font-weight="700">eu-west-1 · Pilot-light DR</text>
+                <rect x="308" y="124" width="166" height="36" rx="10" fill="#10243a" stroke="#ffb24b" stroke-width="1.5"/><text x="391.0" y="141.0" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">ALB + WAF</text><text x="391.0" y="154.0" fill="#92aabd" font-size="9.5" text-anchor="middle">2 AZs · pre-provisioned</text>
+                <rect x="308" y="172" width="78" height="52" rx="10" fill="#10243a" stroke="#ffb24b" stroke-width="1.5"/><text x="347.0" y="187" fill="#7890a4" font-size="9" text-anchor="middle">AZ a</text><text x="347.0" y="204" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">ECS Fargate</text><text x="347.0" y="217" fill="#92aabd" font-size="9.5" text-anchor="middle">minimum tasks</text>
+                <rect x="396" y="172" width="78" height="52" rx="10" fill="#10243a" stroke="#ffb24b" stroke-width="1.5"/><text x="435.0" y="187" fill="#7890a4" font-size="9" text-anchor="middle">AZ b</text><text x="435.0" y="204" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">ECS Fargate</text><text x="435.0" y="217" fill="#92aabd" font-size="9.5" text-anchor="middle">minimum tasks</text>
+                <rect x="308" y="236" width="166" height="40" rx="10" fill="#10243a" stroke="#ffb24b" stroke-width="1.5"/><text x="391.0" y="255.0" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">RDS Proxy → Aurora</text><text x="391.0" y="268.0" fill="#92aabd" font-size="9.5" text-anchor="middle">secondary · read-only</text>
+                <rect x="308" y="288" width="166" height="32" rx="10" fill="#10243a" stroke="#53708a" stroke-width="1.5"/><text x="391.0" y="308.0" fill="#fff" font-size="10.5" font-weight="700" text-anchor="middle">S3 · ECR replicas</text>
+                <path d="M347 160V172M435 160V172M347 224V236M435 224V236" stroke="#ffb24b" stroke-width="2" fill="none" opacity=".8"/>
+
+                <!-- Cross-region replication -->
+                <path d="M252 256H306" stroke="#4ee1c1" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#arr1)"/>
+                <path d="M252 304H306" stroke="#4ee1c1" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#arr1)"/>
+                <text x="250" y="349" fill="#7890a4" font-size="9.5" text-anchor="middle">Replication: Aurora Global Database · S3 CRR · ECR</text>
+
+                <!-- Governance -->
+                <rect x="14" y="358" width="472" height="34" rx="12" fill="#0f2d43" stroke="#ffb24b" stroke-opacity=".6" stroke-width="1.5"/>
+                <text x="250" y="379" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">IAM · multi-Region KMS keys · CloudTrail · Config</text>
+              </svg>
+            </div>
+            <div class="project-copy">
+              <span class="project-number">Project 01 · TradeCore Africa</span>
+              <h3>Multi-region resilient platform on AWS</h3>
+              <p>Designed a pilot-light disaster recovery pattern for a high-throughput financial workload, balancing availability, recovery targets, peak-load performance, encryption, auditability, and operating cost.</p>
+              <div class="metric-row">
+                <div class="metric"><strong>99.95%</strong><span>uptime target</span></div>
+                <div class="metric"><strong>RPO &le; 5m</strong><span>data recovery objective</span></div>
+                <div class="metric"><strong>10× load</strong><span>burst capacity design</span></div>
+              </div>
+              <div class="stack-tags"><span>Route 53</span><span>ECS Fargate</span><span>Aurora</span><span>KMS</span><span>CloudTrail</span><span>WAF</span></div>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/ikigai-crypto/archVault-infrastructure" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository for project 1">GitHub</a>
+                <a class="project-link" href="https://app.notion.com/p/Team-SkyForge-AWS-Vanguard-Project-1-Deliverables-724098942a498288855081865fdb98d9" target="_blank" rel="noopener noreferrer" aria-label="Documentation for project 1">Documentation</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal amber-theme">
+            <div class="project-visual amber">
+              <span class="visual-tag">Security engineering</span>
+              <svg class="cloud-map" viewBox="0 0 500 330" role="img" aria-label="Simplified cloud security control layers diagram">
+                <g fill="none" stroke-width="2">
+                  <rect x="54" y="42" width="392" height="246" rx="26" stroke="#ffb24b" opacity=".42"/>
+                  <rect x="88" y="77" width="324" height="176" rx="22" stroke="#62a9ff" opacity=".55"/>
+                  <rect x="127" y="111" width="246" height="108" rx="18" stroke="#4ee1c1" opacity=".7"/>
+                </g>
+                <text x="250" y="66" fill="#ffb24b" font-size="12" font-weight="700" text-anchor="middle">GOVERNANCE &amp; VISIBILITY</text>
+                <text x="250" y="101" fill="#62a9ff" font-size="12" font-weight="700" text-anchor="middle">IDENTITY &amp; NETWORK</text>
+                <text x="250" y="136" fill="#4ee1c1" font-size="12" font-weight="700" text-anchor="middle">WORKLOAD &amp; DATA</text>
+                <path d="M172 172h156" stroke="#4ee1c1" stroke-width="2" stroke-dasharray="6 6"/>
+                <circle cx="185" cy="172" r="18" fill="#10243a" stroke="#4ee1c1"/><circle cx="250" cy="172" r="18" fill="#10243a" stroke="#4ee1c1"/><circle cx="315" cy="172" r="18" fill="#10243a" stroke="#4ee1c1"/>
+                <text x="185" y="177" fill="#fff" font-size="12" text-anchor="middle">IAM</text><text x="250" y="177" fill="#fff" font-size="12" text-anchor="middle">VPC</text><text x="315" y="177" fill="#fff" font-size="12" text-anchor="middle">KMS</text>
+                <text x="250" y="239" fill="#92aabd" font-size="11" text-anchor="middle">Least privilege · segmentation · encryption</text>
+                <text x="250" y="315" fill="#7890a4" font-size="11" text-anchor="middle">Continuous posture checks · automated response · controlled validation</text>
+              </svg>
+            </div>
+            <div class="project-copy">
+              <span class="project-number">Project 02 · VaultCloud</span>
+              <h3>Cloud security hardening and validation</h3>
+              <p>Helped structure a security engineering program across identity, network controls, posture management, workload hardening, automated response, and threat detection. Controls were re-tested through safe, controlled scenarios and supported by clear evidence.</p>
+              <div class="metric-row">
+                <div class="metric"><strong>+40%</strong><span>posture score improvement</span></div>
+                <div class="metric"><strong>6 domains</strong><span>security coverage</span></div>
+                <div class="metric"><strong>&lt; 5 min</strong><span>simulated response time</span></div>
+              </div>
+              <div class="stack-tags"><span>AWS Config</span><span>GuardDuty</span><span>EventBridge</span><span>Lambda</span><span>CloudWatch</span><span>Zero Trust</span></div>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/ikigai-crypto/breach-zone" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository for project 2">GitHub</a>
+                <a class="project-link" href="https://app.notion.com/p/VaultCloud-s-Cloud-Security-Engineering-3d8bc4a89db880be9df3ed4f59d140c5" target="_blank" rel="noopener noreferrer" aria-label="Documentation for project 2">Documentation</a>
+              </div>
+            </div>
+            <figure class="project-proof">
+              <figcaption class="proof-label">Project 02 · Hardening</figcaption>
+              <img src="C:\Users\pc\Desktop\VM-link\Simulate Policy.png" alt="TradeCore Africa multi-region AWS architecture diagram" loading="lazy">
+            </figure>
+          </article>
+
+          <article class="project reveal amber-theme">
+          <div class="project-visual amber">
+          <span class="visual-tag">Cloud penetration testing</span>
+
+          <svg class="cloud-map" viewBox="0 0 500 330" role="img" aria-label="Simplified S3 security assessment attack path">
+            <defs>
+              <linearGradient id="g3" x1="0" x2="1">
+                <stop stop-color="#ffb24b"/>
+                <stop offset="1" stop-color="#4ee1c1"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Attack path -->
+            <path
+              d="M82 165H150M190 165H258M298 165H366M406 165H440"
+              stroke="url(#g3)"
+              stroke-width="3"
+              stroke-dasharray="7 6"
+              opacity=".8"
+            />
+
+            <!-- Recon -->
+            <rect x="38" y="128" width="112" height="74" rx="16"
+              fill="#10243a" stroke="#ffb24b" stroke-width="2"/>
+            <text x="94" y="157" fill="#fff" font-size="14"
+              font-weight="700" text-anchor="middle">Recon</text>
+            <text x="94" y="180" fill="#92aabd" font-size="11"
+              text-anchor="middle">Nmap · Web enum</text>
+
+            <!-- AWS -->
+            <rect x="150" y="128" width="112" height="74" rx="16"
+              fill="#10243a" stroke="#62a9ff" stroke-width="2"/>
+            <text x="206" y="157" fill="#fff" font-size="14"
+              font-weight="700" text-anchor="middle">AWS Enum</text>
+            <text x="206" y="180" fill="#92aabd" font-size="11"
+              text-anchor="middle">IAM · S3</text>
+
+            <!-- Policy -->
+            <rect x="262" y="128" width="112" height="74" rx="16"
+              fill="#0f2d43" stroke="#4ee1c1" stroke-width="2"/>
+            <text x="318" y="157" fill="#fff" font-size="14"
+              font-weight="700" text-anchor="middle">Policy</text>
+            <text x="318" y="180" fill="#92aabd" font-size="11"
+              text-anchor="middle">Access analysis</text>
+
+            <!-- Object -->
+            <rect x="374" y="128" width="88" height="74" rx="16"
+              fill="#10243a" stroke="#ffb24b" stroke-width="2"/>
+            <text x="418" y="157" fill="#fff" font-size="14"
+              font-weight="700" text-anchor="middle">Object</text>
+            <text x="418" y="180" fill="#92aabd" font-size="11"
+              text-anchor="middle">Retrieval</text>
+
+            <!-- Credential chain -->
+            <circle cx="250" cy="76" r="22"
+              fill="#10243a" stroke="#4ee1c1" stroke-width="2"/>
+            <text x="250" y="81" fill="#fff" font-size="11"
+              font-weight="700" text-anchor="middle">S3</text>
+
+            <path d="M250 98V128"
+              stroke="#4ee1c1"
+              stroke-width="2"
+              stroke-dasharray="6 6"/>
+
+            <circle cx="250" cy="250" r="22"
+              fill="#10243a" stroke="#ffb24b" stroke-width="2"/>
+            <text x="250" y="255" fill="#fff" font-size="10"
+              font-weight="700" text-anchor="middle">CREDS</text>
+
+            <path d="M250 202V228"
+              stroke="#ffb24b"
+              stroke-width="2"
+              stroke-dasharray="6 6"/>
+
+            <text x="250" y="294"
+              fill="#7890a4"
+              font-size="11"
+              text-anchor="middle">
+              Policy disclosure · object retrieval · credential exposure
+            </text>
+          </svg>
+        </div>
+
+        <div class="project-copy">
+          <span class="project-number">Project 03 · Pwned Labs</span>
+
+          <h3>S3 Bucket Policy Enumeration &amp; Unauthorized Access Chain</h3>
+
+          <p>
+            Conducted an authorized cloud penetration test focused on identifying
+            overly permissive Amazon S3 bucket policies and demonstrating how
+            policy disclosure could be chained into targeted object retrieval
+            and credential exposure.
+          </p>
+
+          <div class="metric-row">
+            <div class="metric">
+              <strong>S3</strong>
+              <span>cloud attack surface</span>
+            </div>
+
+            <div class="metric">
+              <strong>Policy</strong>
+              <span>enumeration weakness</span>
+            </div>
+
+            <div class="metric">
+              <strong>Chain</strong>
+              <span>access escalation path</span>
+            </div>
+          </div>
+
+          <div class="stack-tags">
+            <span>AWS S3</span>
+            <span>AWS IAM</span>
+            <span>Nmap</span>
+            <span>Gobuster</span>
+            <span>John the Ripper</span>
+          </div>
+          <details class="walkthrough">
+            <summary>Walkthrough: what I did and what it showed</summary>
+            <div class="walkthrough-body">
+              <h4>Scope</h4>
+              <p>An authorized Pwned Labs environment. I was given a target IP address and a set of AWS credentials, and nothing else.</p>
+
+              <h4>Attack path</h4>
+              <ol>
+                <li><strong>Network reconnaissance.</strong> An Nmap scan of the target showed the open ports and services. I used the discovered port to reach the web page.</li>
+                <li><strong>Web enumeration.</strong> The page source showed that some of the site's resources were hosted in an Amazon S3 bucket.</li>
+                <li><strong>AWS enumeration.</strong> I configured the provided credentials and tested IAM policy listing, bucket listing, object downloads, object ACL checks and unauthenticated access. Most were denied, because the credentials were narrowly scoped.</li>
+                <li><strong>Bucket policy enumeration.</strong> An unsigned request was denied, so the bucket was not public. The bucket policy itself, however, was readable. It revealed which resources existed and which principals could use them, which let me send a targeted download request for an object I could not list.</li>
+                <li><strong>Credential extraction.</strong> The downloaded file was password protected. John the Ripper recovered the password, and the contents exposed administrative credentials and other privileged information.</li>
+                <li><strong>Web directory enumeration.</strong> Gobuster mapped the directories I could reach with those credentials, which led to confidential data inside the lab.</li>
+              </ol>
+              <p>Small AWS permission weaknesses, chained together, became a serious compromise.</p>
+
+              <div class="walkthrough-cols">
+                <div>
+                  <h4>What went wrong</h4>
+                  <ul>
+                    <li>Overly permissive bucket policy</li>
+                    <li>Policy contents disclosed too much about the bucket</li>
+                    <li>Weak access controls around S3 objects</li>
+                    <li>Object names relied on as a security boundary</li>
+                    <li>Credentials stored in a spreadsheet</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>How to fix it</h4>
+                  <ul>
+                    <li>Apply least privilege to IAM and S3 policies</li>
+                    <li>Limit access to bucket policies and metadata to identities that need it</li>
+                    <li>Never treat knowing an object name as access control</li>
+                    <li>Review bucket policies and ACLs regularly for unintended access</li>
+                    <li>Keep credentials in a managed password manager</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </article>
+      <!-- Project 04 — TradeCore -->
+      <article class="project reveal">
+        <div class="project-visual">
+          <span class="visual-tag">Cloud infrastructure</span>
+
+          <svg class="cloud-map" viewBox="0 0 500 330" role="img"
+            aria-label="Simplified TradeCore AWS infrastructure architecture">
+
+            <defs>
+              <linearGradient id="g4" x1="0" x2="1">
+                <stop stop-color="#4ee1c1"/>
+                <stop offset="1" stop-color="#62a9ff"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Connection paths -->
+            <path
+              d="M250 48V82M250 142V174M145 112H72M355 112H428M250 234V274"
+              stroke="url(#g4)"
+              stroke-width="3"
+              stroke-dasharray="8 7"
+              opacity=".8"
+            />
+
+            <!-- Users -->
+            <rect x="25" y="82" width="100" height="60" rx="15"
+              fill="#10243a" stroke="#53708a"/>
+            <text x="75" y="108" fill="#fff" font-size="13"
+              font-weight="700" text-anchor="middle">Users</text>
+            <text x="75" y="128" fill="#92aabd" font-size="11"
+              text-anchor="middle">HTTPS</text>
+
+            <!-- AWS entry -->
+            <rect x="145" y="82" width="210" height="60" rx="16"
+              fill="#0f2d43" stroke="#4ee1c1" stroke-width="2"/>
+            <text x="250" y="108" fill="#fff" font-size="14"
+              font-weight="700" text-anchor="middle">AWS Application Layer</text>
+            <text x="250" y="128" fill="#92aabd" font-size="11"
+              text-anchor="middle">ALB · HTTPS · Security Groups</text>
+
+            <!-- Security -->
+            <rect x="375" y="82" width="100" height="60" rx="15"
+              fill="#10243a" stroke="#62a9ff"/>
+            <text x="425" y="108" fill="#fff" font-size="13"
+              font-weight="700" text-anchor="middle">Security</text>
+            <text x="425" y="128" fill="#92aabd" font-size="11"
+              text-anchor="middle">IAM · WAF</text>
+
+            <!-- Compute -->
+            <rect x="145" y="174" width="210" height="60" rx="16"
+              fill="#10243a" stroke="#62a9ff" stroke-width="2"/>
+            <text x="250" y="200" fill="#fff" font-size="14"
+              font-weight="700" text-anchor="middle">Application Compute</text>
+            <text x="250" y="220" fill="#92aabd" font-size="11"
+              text-anchor="middle">ECS · Fargate · Amplify</text>
+
+            <!-- Database -->
+            <rect x="145" y="274" width="210" height="38" rx="12"
+              fill="#10243a" stroke="#4ee1c1"/>
+            <text x="250" y="298" fill="#fff" font-size="12"
+              font-weight="700" text-anchor="middle">RDS · Secrets Manager</text>
+
+            <!-- Terraform / CI -->
+            <circle cx="72" cy="204" r="34"
+              fill="#10243a" stroke="#ffb24b" stroke-width="2"/>
+            <text x="72" y="201" fill="#fff" font-size="11"
+              font-weight="700" text-anchor="middle">Terraform</text>
+            <text x="72" y="217" fill="#92aabd" font-size="9"
+              text-anchor="middle">IaC</text>
+
+            <circle cx="428" cy="204" r="34"
+              fill="#10243a" stroke="#ffb24b" stroke-width="2"/>
+            <text x="428" y="201" fill="#fff" font-size="10"
+              font-weight="700" text-anchor="middle">GitHub</text>
+            <text x="428" y="217" fill="#92aabd" font-size="9"
+              text-anchor="middle">OIDC</text>
+
+            <!-- Footer -->
+            <text x="250" y="326"
+              fill="#7890a4"
+              font-size="10"
+              text-anchor="middle">
+              Modular IaC · secure connectivity · secrets · policy enforcement
+            </text>
+          </svg>
+        </div>
+
+        <div class="project-copy">
+          <span class="project-number">Project 04 · TradeCore FinOps</span>
+
+          <h3>Secure and Cost Efficient AWS Infrastructure with Terraform</h3>
+
+          <p>
+            Designed a secure, repeatable AWS environment for a multi-service
+            application using modular infrastructure as code and controlled
+            service connectivity.
+          </p>
+
+          <div class="project-details">
+            <p>
+              <strong>Problem:</strong>
+              Design a secure, repeatable AWS environment for a multi-service application.
+            </p>
+
+            <p>
+              <strong>My role:</strong>
+              Worked across the Terraform architecture covering networking,
+              ECS, ALB, RDS, Secrets Manager, and Amplify.
+            </p>
+
+            <p>
+              <strong>Solution:</strong>
+              Built a modular infrastructure design with secure service
+              connectivity, HTTPS, secrets management, policy enforcement,
+              and GitHub Actions OIDC.
+            </p>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric">
+              <strong>IaC</strong>
+              <span>modular Terraform</span>
+            </div>
+
+            <div class="metric">
+              <strong>HTTPS</strong>
+              <span>secure application access</span>
+            </div>
+
+            <div class="metric">
+              <strong>OIDC</strong>
+              <span>keyless CI/CD access</span>
+            </div>
+          </div>
+
+          <div class="stack-tags">
+            <span>Terraform</span>
+            <span>AWS</span>
+            <span>ECS</span>
+            <span>ALB</span>
+            <span>RDS</span>
+            <span>Secrets Manager</span>
+            <span>Amplify</span>
+            <span>GitHub Actions</span>
+          </div>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/ikigai-crypto/tradecore-project2" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository for project 4">GitHub</a>
+                <a class="project-link" href="https://app.notion.com/p/TradeCore-FinOps-3d2098942a498070bf8eda67dd6528f1" target="_blank" rel="noopener noreferrer" aria-label="Documentation for project 4">Documentation</a>
+              </div>
+            </div>
+            <figure class="project-proof">
+              <figcaption class="proof-label">Project 04 · Architecture</figcaption>
+              <img src="C:\Users\pc\Desktop\TradeCore-architecture.jpg" alt="TradeCore Africa Terraform infrastructure architecture diagram" loading="lazy">
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="wrap experience-grid">
+        <div class="experience-side reveal">
+          <p class="eyebrow">Experience</p>
+          <h2 class="section-title">Hands-on cloud security work</h2>
+          <p class="section-lede">Practical experience across access control, infrastructure as code, network design, penetration testing, API security reviews, monitoring, FinOps, and technical documentation.</p>
+        </div>
+        <div class="timeline reveal">
+          <article class="role">
+            <div class="role-date">Aug 2025 — Present</div>
+            <div><h3>Cloud Security Intern</h3><div class="role-company">Expadox Labs</div><p>Designing and securing AWS infrastructure with Terraform, segmented VPC architecture, IAM controls, encrypted services, Secrets Manager, CloudWatch, performance testing, and operational documentation.</p></div>
+          </article>
+          <article class="role">
+            <div class="role-date">Jun 2025 — Present</div>
+            <div><h3>Cloud Security Intern</h3><div class="role-company">PIKA Logistics</div><p>Reviewing IAM access rights, API authentication and authorization controls, cloud costs, infrastructure safeguards, and technical documentation.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section capabilities" id="capabilities">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Capabilities</p>
+          <h2 class="section-title">Development and Security across the cloud lifecycle</h2>
+        </div>
+        <div class="cap-grid">
+          <article class="cap-card reveal"><span class="cap-no">01 / CLOUD</span><h3>AWS security engineering</h3><p>IAM, VPC, S3, ECS/Fargate, RDS, Secrets Manager, KMS, CloudWatch, CloudTrail, Config, and GuardDuty.</p></article>
+          <article class="cap-card reveal"><span class="cap-no">02 / OFFENSIVE</span><h3>Penetration testing</h3><p>Web application and cloud penetration testing, reconnaissance, enumeration, vulnerability discovery, exploitation, privilege escalation, and security validation.</p></article>
+          <article class="cap-card reveal"><span class="cap-no">03 / INFRASTRUCTURE</span><h3>Secure architecture</h3><p>Network segmentation, workload isolation, secure application-to-database communication, encryption, multi-AZ patterns, and disaster recovery planning.</p></article>
+          <article class="cap-card reveal"><span class="cap-no">04 / ASSURANCE</span><h3>Assessment and validation</h3><p>Cloud security reviews, IAM analysis, API access-control reviews, Linux hardening, packet analysis, and controlled security testing.</p></article>
+          <article class="cap-card reveal"><span class="cap-no">05 / OPERATIONS</span><h3>Performance and visibility</h3><p>Infrastructure monitoring, audit trails, FinOps, Grafana k6 load testing, evidence collection, and technical reporting.</p></article>
+        </div>
+        <div class="tool-cloud reveal" aria-label="Tools and technologies"><span>Terraform</span><span>Linux</span><span>Wireshark</span><span>Nmap</span><span>Burp Suite</span><span>Metasploit</span><span>Grafana k6</span><span>TCP/IP</span><span>DNS</span><span>HTTP/S</span><span>Docker</span><span>John the Ripper</span><span>Git</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="credentials">
+      <div class="wrap">
+        <div class="section-head reveal"><p class="eyebrow">Education &amp; credentials</p><h2 class="section-title">Education and Training</h2></div>
+        <div class="credentials">
+          <article class="credential education reveal"><div><span class="type">Education</span><h3>B.Tech, Science Laboratory Technology</h3><p>Ladoke Akintola University of Technology · Chemistry (Biochemistry) discipline · Second Class Upper Division</p></div><div class="degree-mark">B.Tech</div></article>
+          <article class="credential reveal"><span class="type">Certification</span><h3>Introduction to Cybersecurity</h3><p>Cisco Networking Academy</p></article>
+          <article class="credential reveal"><span class="type">Certification</span><h3>Networking Devices and Initial Configuration</h3><p>Cisco Networking Academy</p></article>
+          <article class="credential reveal"><span class="type">Training</span><h3>Ethical Hacking: Beginner to Pro</h3><p>Linux Professional Institute · Tech Bro Academy</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div class="contact-card reveal">
+          <p class="eyebrow">Contact</p>
+          <h2> <span> Let’s Connect </span></h2>
+          <div class="contact-links">
+            <a href="mailto:eodekunle52@gmail.com">eodekunle52@gmail.com</a>
+            <a href="tel:+2348086957702">+234 808 695 7702</a>
+            <a href="https://www.linkedin.com/in/emmanuel-odekunle-5b3033253" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </div>
+        <footer><span>© <span id="year"></span> Emmanuel Odekunle</span><span>Cloud Security · Cybersecurity · AWS · GCP · Infrastructure Design · Infrastructure Security</span></footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const progress = document.querySelector('.scroll-progress');
+    const setProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+    };
+    setProgress();
+    window.addEventListener('scroll', setProgress, { passive: true });
+
+    const reveal = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          reveal.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el) => reveal.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
